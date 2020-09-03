@@ -1,11 +1,11 @@
-import xml.etree.ElementTree as XmlElementTree  #module for working with xml files
-import httplib2                                 #HTTP client library
-import uuid                                     #library for working with UUID
-from config import ***                          #importing *** from config
+import xml.etree.ElementTree as XmlElementTree                                   #module for working with xml files
+import httplib2                                                                  #HTTP client library
+import uuid                                                                      #library for working with UUID
+from config import ***                                                           #importing *** from config
  
-***_HOST = '***'                                #setting host
-***_PATH = '/***_xml'                           #setting path
-CHUNK_SIZE = 1024 ** 2                          #setting chunk size
+***_HOST = '***'                                                                 #setting host
+***_PATH = '/***_xml'                                                            #setting path
+CHUNK_SIZE = 1024 ** 2                                                           #setting chunk size
  
 def speech_to_text(filename=None, bytes=None, request_id=uuid.uuid4().hex, topic='notes', lang='ru-RU',
                    key=***_API_KEY):
