@@ -1,12 +1,15 @@
+#libraries
 import xml.etree.ElementTree as XmlElementTree                                   #module for working with xml files
 import httplib2                                                                  #HTTP client library
 import uuid                                                                      #library for working with UUID
 from config import ***                                                           #importing *** from config
  
+#variables
 ***_HOST = '***'                                                                 #setting host
 ***_PATH = '/***_xml'                                                            #setting path
 CHUNK_SIZE = 1024 ** 2                                                           #setting chunk size
  
+#function transform speech to text and send POST request
 def speech_to_text(filename=None, bytes=None, request_id=uuid.uuid4().hex, topic='notes', lang='ru-RU',
                    key=***_API_KEY):
   
@@ -52,14 +55,15 @@ def speech_to_text(filename=None, bytes=None, request_id=uuid.uuid4().hex, topic
  
 #checking server response
     if response.code == 200:                                                    #if response is OK
-        response_text = response.read()                                         #get html page
+        response_text = response.read()                                         #get HTML page
         xml = XmlElementTree.fromstring(response_text)                          #convert string to xml elem
  
         if int(xml.attrib['success']) == 1:
             max_confidence = - float("inf")                                     #set max_confidence minimum value
             text = ''                                                           #set variable text
  
- #finding child with maximum value of confidence
+#checking if everything is OK on HTML page
+#finding child with maximum value of confidence
             for child in xml:                                                           #for each node in xml tree
                 if float(child.attrib['confidence']) > max_confidence:                  #if child confidence > max_confidence
                     text = child.text                                                   #remember text of child
@@ -69,9 +73,9 @@ def speech_to_text(filename=None, bytes=None, request_id=uuid.uuid4().hex, topic
                 return text                                                                                     #return text
             else:
                 
-                raise SpeechException('No text found.\n\nResponse:\n%s' % (response_text))                      #throw html page
+                raise SpeechException('No text found.\n\nResponse:\n%s' % (response_text))                      #throw HTML page
         else:
-            raise SpeechException('No text found.\n\nResponse:\n%s' % (response_text))                          #throw html page
+            raise SpeechException('No text found.\n\nResponse:\n%s' % (response_text))                          #throw HTML page
     else:
         raise SpeechException('Unknown error.\nCode: %s\n\n%s' % (response.code, response.read()))              #server response is not 200(OK)
  
